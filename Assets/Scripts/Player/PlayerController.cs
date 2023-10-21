@@ -27,9 +27,6 @@ public class PlayerController : MonoBehaviour
         gameInput.OnRunCanceled += OnRunCanceled;
         GameManager.Instance.GameOver += OnGameOver;
         GameManager.Instance.Victory += OnVictory;
-        GameManager.Instance.EggPicked += OnEggPicked;
-
-
 
     }
     void FixedUpdate()
@@ -52,9 +49,6 @@ public class PlayerController : MonoBehaviour
 
  private void OnInteractAction(object sender, EventArgs e)
 {
-    Debug.Log("INTERACTIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
-        
-
     // Check if the player is near a Nest object and has an egg
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2.0f);
     bool nearNest = false;
@@ -70,7 +64,7 @@ public class PlayerController : MonoBehaviour
     if (nearNest && HasEgg())
     {
         DestroyEgg();
-        GameManager.Instance.eggsPicked++;
+        GameManager.Instance.eggsDropped++;
         }
 }
 
@@ -112,13 +106,6 @@ private void DestroyEgg()
      private void OnVictory(object sender, EventArgs e)
     {
         Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOON");
-    }
-
-  private void OnEggPicked(object sender, EventArgs e)
-   {
-    Debug.Log("picked from the PLAYEEEEEEEEEEEEEEEER");
-    bool hasEgg = HasEgg();
-    Debug.Log(sender);
     }
 
     public Transform GetEggNewTransform() {

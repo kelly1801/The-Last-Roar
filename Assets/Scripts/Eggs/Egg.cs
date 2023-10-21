@@ -7,10 +7,13 @@ public class Egg : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
-        GameManager.Instance.EggPicked += OnEggPicked;
     }
+    private void Start()
+    {
+        GameManager.Instance.EggPicked += OnEggPicked;
 
-   private void OnTriggerEnter(Collider other)
+    }
+    private void OnTriggerEnter(Collider other)
 {
     if (other.CompareTag("Player") && !player.HasEgg())
     {

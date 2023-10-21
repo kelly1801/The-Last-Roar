@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 5.0f;
     [SerializeField] private float playerHeight, playerRadius;
+
+    [SerializeField] private Transform playerPickPoint;
     private CharacterController characterController;
     private GameInput gameInput;
 
@@ -50,14 +52,42 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnInteractAction(object sender, EventArgs e)
-    {
-        Debug.Log("INTERACTIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
-    // do eggs interaction
-    // works with e or space
-    // add buttons for joystick and gamepad
+ private void OnInteractAction(object sender, EventArgs e)
+{
+    Debug.Log("INTERACTIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
 
+    // Check if the player is near a Nest object and has an egg
+    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2.0f);
+    bool nearNest = false;
+    foreach (Collider hitCollider in hitColliders)
+    {
+        if (hitCollider.CompareTag("Nest"))
+        {
+            nearNest = true;
+            break;
+        }
     }
+
+    if (nearNest && HasEgg())
+    {
+        DestroyEgg();
+    }
+}
+
+private void DestroyEgg()
+{
+    foreach (Transform child in playerPickPoint)
+    {
+        Egg egg = child.GetComponent<Egg>();
+        if (egg != null)
+        {
+            egg.RemoveEggParent();
+            Destroy(egg.gameObject);
+            break;
+        }
+    }
+}
+
 
     private void OnRunAction(object sender, EventArgs e)
     {
@@ -87,6 +117,24 @@ public class PlayerController : MonoBehaviour
   private void OnEggPicked(object sender, EventArgs e)
    {
     Debug.Log("picked from the PLAYEEEEEEEEEEEEEEEER");
+    bool hasEgg = HasEgg();
+    Debug.Log(hasEgg);
     }
+
+    public Transform GetEggNewTransform() {
+      return playerPickPoint;
+    }
+
+ public bool HasEgg()
+{
+    foreach (Transform child in playerPickPoint)
+    {
+        if (child.GetComponent<Egg>() != null)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 }

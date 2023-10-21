@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     {
         gameInput.OnInteractAction += OnInteractAction;
         gameInput.OnRunAction += OnRunAction;
+        gameInput.OnRunCanceled += OnRunCanceled;
+
     }
     void FixedUpdate()
     {
@@ -44,19 +46,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
- /*   private bool CollisionDetection(Vector3 moveDirection, float moveDistance)
-    {
-        // checks if the object is colliding, if false is not colliding so we get the opposite
-        bool canMove = !Physics.CapsuleCast(
-            transform.position,
-            transform.position + Vector3.up * playerHeight,
-            playerRadius,
-            moveDirection,
-            moveDistance
-            );
-        return canMove;
-    }
- */
     private void OnInteractAction(object sender, EventArgs e)
     {
         Debug.Log("INTERACTIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
@@ -74,4 +63,9 @@ public class PlayerController : MonoBehaviour
         // works with R y SHIFT
     }
 
+    private void OnRunCanceled(object sender, EventArgs e)
+   {
+    Debug.Log("STOPPED RUNNING");
+    // Your code to handle the Run key being released
+   }
 }

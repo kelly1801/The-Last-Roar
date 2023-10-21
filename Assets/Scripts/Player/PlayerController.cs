@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
         gameInput.OnInteractAction += OnInteractAction;
         gameInput.OnRunAction += OnRunAction;
         gameInput.OnRunCanceled += OnRunCanceled;
+        GameManager.Instance.GameOver += OnGameOver;
+        GameManager.Instance.Victory += OnVictory;
+        GameManager.Instance.EggPicked += OnEggPicked;
+
+
 
     }
     void FixedUpdate()
@@ -40,8 +45,7 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(moveDirection * moveDistance);
 
-        
-
+    
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 
     }
@@ -68,4 +72,21 @@ public class PlayerController : MonoBehaviour
     Debug.Log("STOPPED RUNNING");
     // Your code to handle the Run key being released
    }
+
+   private void OnGameOver(object sender, EventArgs e)
+    {
+        Debug.Log("GAME OVEEEEEEEEEEEEEEEEEEEEEEEEEEEER");
+        // Your code to handle the Game Over event
+    }
+
+     private void OnVictory(object sender, EventArgs e)
+    {
+        Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOON");
+    }
+
+  private void OnEggPicked(object sender, EventArgs e)
+   {
+    Debug.Log("picked from the PLAYEEEEEEEEEEEEEEEER");
+    }
+
 }

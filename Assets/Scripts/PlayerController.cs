@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
       
       Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
-        // activate running animation
+        dinoAnimator.SetBool("isWalking", true);
         // works with R y SHIFT
     }
 

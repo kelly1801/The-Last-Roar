@@ -9,13 +9,17 @@ public class Egg : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
     }
    
+
     private void OnTriggerEnter(Collider other)
 {
         if (other.CompareTag("Player") && !player.HasEgg())
         {
             player.pickedEgg = this;
-            SetEggParent(player);
-    }
+            SetEggParent(player); 
+        }else if (other.CompareTag("Player") && player.HasEgg())
+        {
+            Debug.Log("You can only have one egg at a time");
+        }
 }
 
     public void SetEggParent(PlayerController player)

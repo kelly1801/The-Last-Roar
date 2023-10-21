@@ -781,7 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33347485c7ff4d24589a2305df9f3dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eggsPicked: 0
+  eggsDropped: 0
   eggsGoal: 3
   timerDurationInMinutes: 1
 --- !u!4 &969454881

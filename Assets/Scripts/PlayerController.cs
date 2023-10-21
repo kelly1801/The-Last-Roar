@@ -11,11 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerHeight, playerRadius;
     private CharacterController characterController;
     private GameInput gameInput;
+    private Animator dinoAnimator;
 
     private void Awake()
     {
         gameInput = GetComponent<GameInput>();
         characterController = GetComponent<CharacterController>();
+        dinoAnimator = GetComponent<Animator>();
         playerHeight = characterController.height;
         playerRadius = characterController.radius;
     
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(moveDirection * moveDistance);
 
-        
+        dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
 
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 

@@ -8,19 +8,17 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 5.0f;
-    [SerializeField] private float playerHeight, playerRadius;
 
     [SerializeField] private Transform playerPickPoint;
     private CharacterController characterController;
+    public Egg pickedEgg;
     private GameInput gameInput;
 
     private void Awake()
     {
         gameInput = GetComponent<GameInput>();
         characterController = GetComponent<CharacterController>();
-        playerHeight = characterController.height;
-        playerRadius = characterController.radius;
-    
+      
     }
     private void Start()
     {
@@ -55,6 +53,7 @@ public class PlayerController : MonoBehaviour
  private void OnInteractAction(object sender, EventArgs e)
 {
     Debug.Log("INTERACTIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
+        
 
     // Check if the player is near a Nest object and has an egg
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2.0f);
@@ -71,7 +70,8 @@ public class PlayerController : MonoBehaviour
     if (nearNest && HasEgg())
     {
         DestroyEgg();
-    }
+        GameManager.Instance.eggsPicked++;
+        }
 }
 
 private void DestroyEgg()
@@ -118,7 +118,7 @@ private void DestroyEgg()
    {
     Debug.Log("picked from the PLAYEEEEEEEEEEEEEEEER");
     bool hasEgg = HasEgg();
-    Debug.Log(hasEgg);
+    Debug.Log(sender);
     }
 
     public Transform GetEggNewTransform() {
@@ -127,14 +127,7 @@ private void DestroyEgg()
 
  public bool HasEgg()
 {
-    foreach (Transform child in playerPickPoint)
-    {
-        if (child.GetComponent<Egg>() != null)
-        {
-            return true;
-        }
-    }
-    return false;
+  return pickedEgg != null;
 }
 
 }

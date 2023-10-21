@@ -8,25 +8,15 @@ public class Egg : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
     }
-    private void Start()
-    {
-        GameManager.Instance.EggPicked += OnEggPicked;
-
-    }
+   
     private void OnTriggerEnter(Collider other)
 {
-    if (other.CompareTag("Player") && !player.HasEgg())
-    {
-        GameManager.Instance.OnEggPicked();
+        if (other.CompareTag("Player") && !player.HasEgg())
+        {
+            player.pickedEgg = this;
+            SetEggParent(player);
     }
 }
-
-    private void OnEggPicked(object sender, EventArgs e)
-    {
-        GameManager.Instance.eggsPicked++;
-        SetEggParent(player);
-
-    }
 
     public void SetEggParent(PlayerController player)
     {
@@ -38,11 +28,7 @@ public class Egg : MonoBehaviour
     transform.parent = null;
     }
 
-    private void OnDestroy()
-    {
-        GameManager.Instance.EggPicked -= OnEggPicked;
-    }
-    
+
   
 }
 

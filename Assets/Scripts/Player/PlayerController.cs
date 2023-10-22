@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private GameInput gameInput;
     private Animator dinoAnimator;
 
+    private bool isRunning;
+
     private void Awake()
     {
         gameInput = GetComponent<GameInput>();
@@ -89,17 +91,24 @@ private void DestroyEgg()
     {
       
       Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
-        moveSpeed *= 2.0f;
-        dinoAnimator.SetBool("isRunning", true);
+      Vector2 inputVector = gameInput.GetMovementVector();
+      bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;
+      dinoAnimator.SetBool("isRunning", ShouldRun);
+      if (ShouldRun)
+       {
+          moveSpeed *= 2.0f;
+          isRunning = true;
+       }
     }
 
     private void OnRunCanceled(object sender, EventArgs e)
    {
     Debug.Log("STOPPED RUNNING");
         dinoAnimator.SetBool("isRunning", false);
-        moveSpeed /= 2.0f;
-    // Your code to handle the Run key being released
-   }
+        moveSpeed = isRunning ? moveSpeed / 2.0f : moveSpeed;
+        isRunning = false;
+        // Your code to handle the Run key being released
+    }
 
    private void OnGameOver(object sender, EventArgs e)
     {

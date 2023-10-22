@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    public int eggsPicked = 0;
+    public int eggsDropped = 0;
     [SerializeField] int eggsGoal = 1;
     public static GameManager Instance
     {
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (eggsPicked == eggsGoal && !victoryTriggered)
+        if (eggsDropped == eggsGoal && !victoryTriggered)
         {
             victoryTriggered = true;
             OnVictory();

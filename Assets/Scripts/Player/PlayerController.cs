@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         float moveDistance = moveSpeed * Time.deltaTime;
 
         characterController.Move(moveDirection * moveDistance);
-        dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
+        if(!dinoAnimator.GetBool("isRunning")) dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
 
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 
@@ -89,8 +89,8 @@ private void DestroyEgg()
 
     private void OnRunAction(object sender, EventArgs e)
     {
-      
       Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+      dinoAnimator.SetBool("isWalking", false);
       Vector2 inputVector = gameInput.GetMovementVector();
       bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;
       dinoAnimator.SetBool("isRunning", ShouldRun);

@@ -16,9 +16,10 @@ public class FootStepsModule : MonoBehaviour
          
     }
 
-    void PlayFootStepSounds()
+    void PlayFootStepSounds() // Usado en el modulo de animation como eventos.
     {
         AudioClip clip = walkingfootStepSounds[Random.Range(0, walkingfootStepSounds.Length)];
+        audioSource.pitch = .8f;
         audioSource.clip = clip;
         audioSource.Play();
         Debug.Log(clip.name);
@@ -27,6 +28,7 @@ public class FootStepsModule : MonoBehaviour
     void PlayRunningFootStepSounds()
     {
         AudioClip clip = runningfootStepSounds[Random.Range(0, runningfootStepSounds.Length)];
+        audioSource.pitch = 1.0f;
         audioSource.clip = clip;
         audioSource.Play();
         Debug.Log(clip.name);

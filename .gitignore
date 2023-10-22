@@ -1,6 +1,9 @@
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
+.vscode
+.vsconfig
+
 #
 /[Ll]ibrary/
 /[Tt]emp/
@@ -46,6 +49,11 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+
+# Others
+Assets/Editor.meta
+Assets/Editor/ScriptOptions.cs
+Assets/Editor/ScriptOptions.cs.meta
 
 # Unity3D generated meta files
 *.pidb.meta

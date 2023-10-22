@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private GameInput gameInput;
     private Animator dinoAnimator;
 
+    private bool isRunning;
+
     private void Awake()
     {
         gameInput = GetComponent<GameInput>();
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
         float moveDistance = moveSpeed * Time.deltaTime;
 
         characterController.Move(moveDirection * moveDistance);
-        dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
+        if(!dinoAnimator.GetBool("isRunning")) dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
 
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 
@@ -87,19 +89,26 @@ private void DestroyEgg()
 
     private void OnRunAction(object sender, EventArgs e)
     {
-      
       Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
-        moveSpeed *= 2.0f;
-        dinoAnimator.SetBool("isRunning", true);
+      dinoAnimator.SetBool("isWalking", false);
+      Vector2 inputVector = gameInput.GetMovementVector();
+      bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;
+      dinoAnimator.SetBool("isRunning", ShouldRun);
+      if (ShouldRun)
+       {
+          moveSpeed *= 2.0f;
+          isRunning = true;
+       }
     }
 
     private void OnRunCanceled(object sender, EventArgs e)
    {
     Debug.Log("STOPPED RUNNING");
         dinoAnimator.SetBool("isRunning", false);
-        moveSpeed /= 2.0f;
-    // Your code to handle the Run key being released
-   }
+        moveSpeed = isRunning ? moveSpeed / 2.0f : moveSpeed;
+        isRunning = false;
+        // Your code to handle the Run key being released
+    }
 
    private void OnGameOver(object sender, EventArgs e)
     {

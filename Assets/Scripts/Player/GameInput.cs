@@ -6,6 +6,8 @@ public class GameInput : MonoBehaviour
 {
     public event EventHandler OnInteractAction;
     public event EventHandler OnRunAction;
+    public event EventHandler OnRunCanceled;
+
     private PlayerInputActions playerInputActions;
     
     private void Awake () {
@@ -13,6 +15,7 @@ public class GameInput : MonoBehaviour
          playerInputActions.Player.Enable();
          playerInputActions.Player.Interact.performed += Interact_performed;
          playerInputActions.Player.Run.performed += Run_performed;
+         playerInputActions.Player.Run.canceled += Run_stoped;
     }
 
 
@@ -38,6 +41,12 @@ public class GameInput : MonoBehaviour
             OnRunAction?.Invoke(this, EventArgs.Empty);
         
     }
+
+    private void Run_stoped(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+{
+    // null check OnRunCanceled
+    OnRunCanceled?.Invoke(this, EventArgs.Empty);
+}
 
 
 }

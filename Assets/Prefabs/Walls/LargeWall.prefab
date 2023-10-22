@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5283127421888050349}
   - component: {fileID: 147670092410924785}
   m_Layer: 0
-  m_Name: stone-round (1) 1
+  m_Name: LargeWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

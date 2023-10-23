@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FxTemporaire
   - Nest
+  - AudioSource
   layers:
   - Default
   - TransparentFX

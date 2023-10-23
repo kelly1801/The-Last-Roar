@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2592685407360033621}
   - component: {fileID: 41458230905817662}
   - component: {fileID: 7900755679013636996}
+  - component: {fileID: 5482297058517237539}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -103,9 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotateSpeed: 5
-  playerHeight: 0
-  playerRadius: 0
   playerPickPoint: {fileID: 9023049979057408389}
+  pickedEgg: {fileID: 0}
 --- !u!114 &41458230905817662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +144,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 1.18}
+--- !u!65 &5482297058517237539
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166484146413021987}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8752747, y: 4.4979787, z: 7.7841187}
+  m_Center: {x: -0.32366943, y: -0.6748631, z: 0.055786133}
 --- !u!1001 &4018211935967161961
 PrefabInstance:
   m_ObjectHideFlags: 0

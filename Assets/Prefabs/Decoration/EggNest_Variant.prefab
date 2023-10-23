@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1643283475379700, guid: 24b07e54e538647e7b444bdd803056f6, type: 3}
       propertyPath: m_Name
-      value: egg-dino-nest (2) Variant
+      value: EggNest_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4512312643518604, guid: 24b07e54e538647e7b444bdd803056f6, type: 3}
       propertyPath: m_LocalPosition.x

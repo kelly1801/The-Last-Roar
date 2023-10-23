@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         gameInput.OnInteractAction += OnInteractAction;
         gameInput.OnRunAction += OnRunAction;
         gameInput.OnRunCanceled += OnRunCanceled;
+        gameInput.OnAttackAction += OnAttackAction;
         GameManager.Instance.GameOver += OnGameOver;
         GameManager.Instance.Victory += OnVictory;
 
@@ -53,6 +54,17 @@ public class PlayerController : MonoBehaviour
         if (canMove)
         {
             transform.position += moveDirection * moveDistance;
+
+        }
+        if (inputVector != Vector2.zero)
+        {
+            dinoAnimator.SetBool("isWalking", true);
+
+        } else
+        {
+            dinoAnimator.SetBool("isWalking", false);
+
+
         }
 
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
@@ -129,6 +141,7 @@ private void DestroyEgg()
         // Your code to handle the Run key being released
     }
 
+
    private void OnGameOver(object sender, EventArgs e)
     {
         Debug.Log("GAME OVEEEEEEEEEEEEEEEEEEEEEEEEEEEER");
@@ -138,6 +151,10 @@ private void DestroyEgg()
      private void OnVictory(object sender, EventArgs e)
     {
         Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOON");
+    }
+    private void OnAttackAction(object sender, EventArgs e)
+    {
+        Debug.Log("ATACKKKKKKKKKKKKKKKKKKKKKKK");
         dinoAnimator.SetBool("isAttacking", true);
     }
 

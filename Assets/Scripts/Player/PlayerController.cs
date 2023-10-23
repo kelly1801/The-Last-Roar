@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 5.0f;
     private float playerRadius;
     private float playerHeight;
+    public bool nearNest = false;
+
 
 
     [SerializeField] private Transform playerPickPoint;
@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
         bool canMove = CollisionDetection(moveDirection, moveDistance);
 
+
+        if (!dinoAnimator.GetBool("isRunning")) dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
+
         if (canMove)
         {
             transform.position += moveDirection * moveDistance;
@@ -75,15 +78,7 @@ public class PlayerController : MonoBehaviour
 {
     // Check if the player is near a Nest object and has an egg
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2.0f);
-    bool nearNest = false;
-    foreach (Collider hitCollider in hitColliders)
-    {
-        if (hitCollider.CompareTag("Nest"))
-        {
-            nearNest = true;
-            break;
-        }
-    }
+    
 
     if (nearNest && HasEgg())
     {
@@ -92,7 +87,15 @@ public class PlayerController : MonoBehaviour
         }
 }
 
-private void DestroyEgg()
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Nest"))
+        {
+            nearNest = true;
+
+        }
+    }
+    private void DestroyEgg()
 {
     foreach (Transform child in playerPickPoint)
     {
@@ -120,7 +123,6 @@ private void DestroyEgg()
     }
     private void OnRunAction(object sender, EventArgs e)
     {
-      Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
       dinoAnimator.SetBool("isWalking", false);
       Vector2 inputVector = gameInput.GetMovementVector();
       bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;

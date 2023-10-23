@@ -8,7 +8,7 @@ public class SoundPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
-    [SerializeField] private float volume;
+    //[SerializeField] private float volume;
 
     private Button _button;
 
@@ -20,6 +20,6 @@ public class SoundPlayer : MonoBehaviour
 
     private void Play()
     {
-        audioSource.PlayOneShot(audioClip, volume);
+        audioSource.PlayOneShot(audioClip, AudioManager.Volume);
     }
 }

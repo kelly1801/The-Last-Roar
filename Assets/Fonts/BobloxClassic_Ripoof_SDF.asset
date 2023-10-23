@@ -16,8 +16,8 @@ MonoBehaviour:
   material: {fileID: 5372297457826787812}
   materialHashCode: -548577332
   m_Version: 1.1.0
-  m_SourceFontFileGUID: c8df5bd101ff5dc468b07d0acc0fd704
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: c8df5bd101ff5dc468b07d0acc0fd704,
+  m_SourceFontFileGUID: 932473ea97d489245a4df46fe987fbd3
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 932473ea97d489245a4df46fe987fbd3,
     type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
@@ -2561,7 +2561,7 @@ MonoBehaviour:
   m_FallbackFontAssetTable: []
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: c8df5bd101ff5dc468b07d0acc0fd704
+    sourceFontFileGUID: 932473ea97d489245a4df46fe987fbd3
     pointSizeSamplingMode: 0
     pointSize: 52
     padding: 5
@@ -2570,7 +2570,7 @@ MonoBehaviour:
     atlasHeight: 512
     characterSetSelectionMode: 0
     characterSequence: 32 - 126, 160, 8203, 8230, 9633
-    referencedFontAssetGUID: 
+    referencedFontAssetGUID: 4e95c9b9f40d31d49a0dfff7b1f27e6b
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
@@ -2676,10 +2676,10 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 1
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioA: 0.5797101
     - _ScaleRatioB: 0.46875
     - _ScaleRatioC: 0.46875
     - _ScaleX: 1
@@ -2708,7 +2708,7 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.018500218, g: 0.008023192, b: 0.004391442, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}

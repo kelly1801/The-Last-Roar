@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float timerDurationInMinutes = 5f;
     private bool victoryTriggered = false;
+    private  static float durationInSeconds;
 
     private void Awake()
     {
@@ -50,8 +51,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartTimer(float durationInMinutes)
     {
-        float durationInSeconds = durationInMinutes * 60;
-        
+        durationInSeconds = durationInMinutes * 60;
+
         while (durationInSeconds > 0)
         {
             yield return new WaitForSeconds(1f);
@@ -76,7 +77,14 @@ public class GameManager : MonoBehaviour
         EggPicked?.Invoke(this, EventArgs.Empty);
     }
 
+    public static bool Pause
+    {
+        get { return Time.timeScale == 0; }
+        set { if (value) { Time.timeScale = 0; } else { Time.timeScale = 1; } }
+    }
 
-
+    public static int Seconds{
+        get {return (int) durationInSeconds;}
+    }
 
 }

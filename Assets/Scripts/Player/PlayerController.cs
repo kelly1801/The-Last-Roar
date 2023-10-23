@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
         bool canMove = CollisionDetection(moveDirection, moveDistance);
 
+
+        if (!dinoAnimator.GetBool("isRunning")) dinoAnimator.SetBool("isWalking", inputVector == new Vector2(0, 0) ? false : true);
+
         if (canMove)
         {
             transform.position += moveDirection * moveDistance;

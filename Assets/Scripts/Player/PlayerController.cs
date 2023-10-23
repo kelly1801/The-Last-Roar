@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -123,7 +121,6 @@ private void DestroyEgg()
     }
     private void OnRunAction(object sender, EventArgs e)
     {
-      Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
       dinoAnimator.SetBool("isWalking", false);
       Vector2 inputVector = gameInput.GetMovementVector();
       bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;

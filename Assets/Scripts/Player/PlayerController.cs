@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 5.0f;
     private float playerRadius;
     private float playerHeight;
+    public bool nearNest = false;
+
 
 
     [SerializeField] private Transform playerPickPoint;
@@ -76,15 +78,7 @@ public class PlayerController : MonoBehaviour
 {
     // Check if the player is near a Nest object and has an egg
     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2.0f);
-    bool nearNest = false;
-    foreach (Collider hitCollider in hitColliders)
-    {
-        if (hitCollider.CompareTag("Nest"))
-        {
-            nearNest = true;
-            break;
-        }
-    }
+    
 
     if (nearNest && HasEgg())
     {
@@ -93,7 +87,15 @@ public class PlayerController : MonoBehaviour
         }
 }
 
-private void DestroyEgg()
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Nest"))
+        {
+            nearNest = true;
+
+        }
+    }
+    private void DestroyEgg()
 {
     foreach (Transform child in playerPickPoint)
     {

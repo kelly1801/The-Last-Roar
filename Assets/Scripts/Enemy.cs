@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     {
         agent.destination = player.transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        Debug.Log(distanceToPlayer);
         if (distanceToPlayer < dangerDistance)
         {
 

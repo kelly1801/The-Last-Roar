@@ -158,6 +158,36 @@ PrefabInstance:
       propertyPath: ShapeModule.enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5660371
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.6938845
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.6098221
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.02049706
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.21564746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455498449517880852, guid: e62e775cb5c996a4c944ff20f3cec481,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.0025169253
+      objectReference: {fileID: 0}
     - target: {fileID: 4346457330195515200, guid: e62e775cb5c996a4c944ff20f3cec481,
         type: 3}
       propertyPath: m_Materials.Array.size

@@ -7,13 +7,14 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnRunAction;
     public event EventHandler OnRunCanceled;
-
+    public event EventHandler OnAttackAction;
     private PlayerInputActions playerInputActions;
     
     private void Awake () {
          playerInputActions = new PlayerInputActions();
          playerInputActions.Player.Enable();
          playerInputActions.Player.Interact.performed += Interact_performed;
+         playerInputActions.Player.Attack.performed += Attack_performed;
          playerInputActions.Player.Run.performed += Run_performed;
          playerInputActions.Player.Run.canceled += Run_stoped;
     }
@@ -48,5 +49,10 @@ public class GameInput : MonoBehaviour
     OnRunCanceled?.Invoke(this, EventArgs.Empty);
 }
 
+    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        // null check OnRunCanceled
+        OnAttackAction?.Invoke(this, EventArgs.Empty);
+    }
 
 }

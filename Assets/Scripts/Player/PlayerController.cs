@@ -8,17 +8,25 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 5.0f;
+    private float playerRadius;
+    private float playerHeight;
+
 
     [SerializeField] private Transform playerPickPoint;
-    private CharacterController characterController;
+   
     public Egg pickedEgg;
     private GameInput gameInput;
+    private Animator dinoAnimator;
+
+    private bool isRunning;
 
     private void Awake()
     {
         gameInput = GetComponent<GameInput>();
-        characterController = GetComponent<CharacterController>();
-      
+        dinoAnimator = GetComponent<Animator>();
+        playerRadius = GetComponent<CharacterController>().radius;
+        playerHeight = GetComponent<CharacterController>().height;
+
     }
     private void Start()
     {
@@ -40,9 +48,13 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = new(inputVector.x, 0.0f, inputVector.y);
         float moveDistance = moveSpeed * Time.deltaTime;
 
-        characterController.Move(moveDirection * moveDistance);
+        bool canMove = CollisionDetection(moveDirection, moveDistance);
 
-    
+        if (canMove)
+        {
+            transform.position += moveDirection * moveDistance;
+        }
+
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
 
     }
@@ -82,35 +94,58 @@ private void DestroyEgg()
     }
 }
 
-
+    private bool CollisionDetection(Vector3 moveDirection, float moveDistance)
+    {
+        // checks if the object is colliding, if false is not colliding so we get the opposite
+        bool canMove = !Physics.CapsuleCast(
+            transform.position,
+            transform.position + Vector3.up * playerHeight,
+            playerRadius,
+            moveDirection,
+            moveDistance
+            );
+        return canMove;
+    }
     private void OnRunAction(object sender, EventArgs e)
     {
-      
       Debug.Log("RUNNINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
-        // activate running animation
-        // works with R y SHIFT
+      dinoAnimator.SetBool("isWalking", false);
+      Vector2 inputVector = gameInput.GetMovementVector();
+      bool ShouldRun = inputVector != Vector2.zero && moveSpeed > 0.0f;
+      dinoAnimator.SetBool("isRunning", ShouldRun);
+      if (ShouldRun)
+       {
+          moveSpeed *= 2.0f;
+          isRunning = true;
+       }
     }
 
     private void OnRunCanceled(object sender, EventArgs e)
    {
     Debug.Log("STOPPED RUNNING");
-    // Your code to handle the Run key being released
-   }
+        dinoAnimator.SetBool("isRunning", false);
+        moveSpeed = isRunning ? moveSpeed / 2.0f : moveSpeed;
+        isRunning = false;
+        // Your code to handle the Run key being released
+    }
 
    private void OnGameOver(object sender, EventArgs e)
     {
         Debug.Log("GAME OVEEEEEEEEEEEEEEEEEEEEEEEEEEEER");
-        // Your code to handle the Game Over event
+        dinoAnimator.SetBool("isDead", true);
     }
 
      private void OnVictory(object sender, EventArgs e)
     {
         Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOON");
+        dinoAnimator.SetBool("isAttacking", true);
     }
 
     public Transform GetEggNewTransform() {
       return playerPickPoint;
     }
+
+
 
  public bool HasEgg()
 {

@@ -12,8 +12,16 @@ public class ScenesManager : MonoBehaviour
 
     private static UnityEvent onSceneChange;
     private static int scene;
+    private static int _scenesQuantity;
 
     private ScenesManager instance;
+
+    [SerializeField] private int scenesQuantity;
+
+    public static int ScenesQuantity
+    {
+        get => _scenesQuantity;
+    }
 
     public static int Scene
     {
@@ -41,6 +49,8 @@ public class ScenesManager : MonoBehaviour
 
     private void Start()
     {
+        _scenesQuantity = scenesQuantity;
+
         scene = 0;
 
         SceneManager.sceneLoaded += OnEsceneLoaded;

@@ -1,4 +1,3 @@
-
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +15,6 @@ public class SceneLoader : MonoBehaviour
 
     public static void LoadLastScene()
     {
-        ScenesManager.Scene = EditorBuildSettings.scenes.Length - 1;
+        ScenesManager.Scene = ScenesManager.ScenesQuantity - 1;
     }
 }

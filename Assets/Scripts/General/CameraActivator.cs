@@ -5,7 +5,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class CameraActivator : MonoBehaviour
 {
-
     [SerializeField] private CinemachineVirtualCamera currentCamera;
     [SerializeField] private CinemachineVirtualCamera nextCamera;
 

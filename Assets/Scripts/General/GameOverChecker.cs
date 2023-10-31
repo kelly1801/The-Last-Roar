@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameOverChecker : MonoBehaviour
 {
-
+    #region privatemethods
     private void FixedUpdate()
     {
         Check();
@@ -10,15 +10,11 @@ public class GameOverChecker : MonoBehaviour
 
     private void Check()
     {
-        if (PlayerController.GameOver)
+        if (GameManager.GameOver)
         {
             SceneLoader.LoadLastScene();
-            gameObject.SetActive(false);
-        }
-        else if (PlayerController.Victory)
-        {
-            SceneLoader.LoadNextScene();
-            gameObject.SetActive(false);
+            enabled = false;
         }
     }
+    #endregion
 }

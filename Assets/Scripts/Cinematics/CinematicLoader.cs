@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class CinematicLoader : MonoBehaviour
 {
+    #region serializedfields
+    [SerializeField] private GameObject goodEnding;
+    [SerializeField] private GameObject badEnding;
+    [SerializeField] private CinematicType type = CinematicType.None;
+    #endregion
+
+    #region privatefields
     private enum CinematicType
     {
         None,
-        Happy,
-        Sad
+        Good,
+        Bad
     }
+    #endregion
 
-    [SerializeField] private GameObject happyEnding;
-    [SerializeField] private GameObject sadEnding;
-    [SerializeField] private CinematicType type = CinematicType.None;
-
+    #region privatemethods
     private void Start()
     {
         if (type == CinematicType.None)
@@ -27,15 +32,13 @@ public class CinematicLoader : MonoBehaviour
 
     private void ExecuteByPlayer()
     {
-        if (PlayerController.GameOver)
+        if (PlayerController.IsDead)
         {
-            happyEnding.SetActive(false);
-            sadEnding.SetActive(true);
+            PlayBadEnding();
         }
         else
         {
-            happyEnding.SetActive(true);
-            sadEnding.SetActive(false);
+            PlayGoodEnding();
         }
     }
 
@@ -43,14 +46,25 @@ public class CinematicLoader : MonoBehaviour
     {
         switch (type)
         {
-            case CinematicType.Happy:
-                happyEnding.SetActive(true);
-                sadEnding.SetActive(false);
+            case CinematicType.Good:
+                PlayGoodEnding();
                 break;
-            case CinematicType.Sad:
-                happyEnding.SetActive(false);
-                sadEnding.SetActive(true);
+            case CinematicType.Bad:
+                PlayBadEnding();
                 break;
         }
     }
+
+    private void PlayGoodEnding()
+    {
+        goodEnding.SetActive(true);
+        badEnding.SetActive(false);
+    }
+
+    private void PlayBadEnding()
+    {
+        goodEnding.SetActive(false);
+        badEnding.SetActive(true);
+    }
+    #endregion
 }

@@ -1,58 +1,36 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(AudioSource))]
-public class AudioManager : MonoBehaviour
+public static class AudioManager
 {
-    private static readonly string VOLUME = "VOLUME";
-    private static UnityEvent onVolumeChange;
-
-    private AudioManager instance;
-    private AudioSource audioSource;
-
-    [SerializeField] private float volumeMultiplier = 1f;
-
-    public static float Volume
+    public enum AudioType
     {
-        get => PlayerPrefs.GetFloat(VOLUME, 0.1f);
-        set
+        Music,
+        Sound,
+        Null
+    }
+
+    public static float GetVolume(AudioType type)
+    {
+        return type switch
         {
-            PlayerPrefs.SetFloat(VOLUME, value);
-            onVolumeChange.Invoke();
-        }
+            AudioType.Music => MusicAudio.Volume,
+            AudioType.Sound => SoundAudio.Volume,
+            _ => 0f,
+        };
     }
 
-    private void Awake()
+    public static void SetVolume(AudioType type, float volume)
     {
-        if (instance == null)
+        switch (type)
         {
-            instance = this;
-
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        audioSource = gameObject.GetComponent<AudioSource>();
-
-        onVolumeChange = new UnityEvent();
-        onVolumeChange.AddListener(OnVolumeChanged);
-
-        SetVolume();
-    }
-
-    private void SetVolume()
-    {
-        audioSource.volume = Volume * volumeMultiplier;
-    }
-
-    private void OnVolumeChanged()
-    {
-        SetVolume();
+            case AudioType.Music:
+                MusicAudio.Volume = volume;
+                break;
+            case AudioType.Sound:
+                SoundAudio.Volume = volume;
+                break;
+            case AudioType.Null:
+                break;
+        };
     }
 }

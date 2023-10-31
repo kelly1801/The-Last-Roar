@@ -1,8 +1,8 @@
-using UnityEditor;
 using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
+    #region publicstaticmethods
     public static void LoadNextScene()
     {
         ScenesManager.Scene++;
@@ -17,4 +17,5 @@ public class SceneLoader : MonoBehaviour
     {
         ScenesManager.Scene = ScenesManager.ScenesQuantity - 1;
     }
+    #endregion
 }

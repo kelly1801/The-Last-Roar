@@ -51,11 +51,6 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# Others
-Assets/Editor.meta
-Assets/Editor/ScriptOptions.cs
-Assets/Editor/ScriptOptions.cs.meta
-
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta

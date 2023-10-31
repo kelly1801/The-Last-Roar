@@ -5,17 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    [SerializeField] GameManager gameManager;
+
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 5.0f;
     private float playerRadius;
     private float playerHeight;
     public bool nearNest = false;
 
-    private static bool gameOver;
-    private static bool victory;
-
-    public static bool GameOver{get => gameOver;}
-    public static bool Victory{get => victory;}
+    private static bool isDead;
+    public static bool IsDead { get => isDead; }
 
     [SerializeField] private Transform playerPickPoint;
 
@@ -35,15 +34,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        gameOver = false;
-        victory = false;
+        isDead = false;
 
         gameInput.OnInteractAction += OnInteractAction;
         gameInput.OnRunAction += OnRunAction;
         gameInput.OnRunCanceled += OnRunCanceled;
         gameInput.OnAttackAction += OnAttackAction;
-        GameManager.Instance.GameOver += OnGameOver;
-        GameManager.Instance.Victory += OnVictory;
+        gameManager.GameOverEvent += OnGameOver;
+        gameManager.VictoryEvent += OnVictory;
 
     }
     void FixedUpdate()
@@ -92,7 +90,7 @@ public class PlayerController : MonoBehaviour
         if (nearNest && HasEgg())
         {
             DestroyEgg();
-            GameManager.EggsDropped++;
+            gameManager.EggsDropped++;
         }
     }
 
@@ -159,18 +157,23 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GameOverCoroutine()
     {
-        dinoAnimator.SetBool("isDead", true);
+        if (dinoAnimator != null)
+        {
+            dinoAnimator.SetBool("isDead", true);
+        }
         yield return new WaitForSeconds(3);
         Debug.Log("GAME OVEEEEEEEEEEEEEEEEEEEEEEEEEEEER");
-        gameOver = true;
-        this.enabled = false;
+        isDead = true;
+        GameManager.GameOver = true;
+        enabled = false;
     }
 
     private void OnVictory(object sender, EventArgs e)
     {
         Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOON");
-        victory = true;
-        this.enabled = false;
+        isDead = false;
+        GameManager.GameOver = true;
+        enabled = false;
     }
     private void OnAttackAction(object sender, EventArgs e)
     {

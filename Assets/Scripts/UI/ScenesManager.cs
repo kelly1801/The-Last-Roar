@@ -1,38 +1,51 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
-    public delegate void OpenCrossfadeDelegate();
-    public delegate void ExitCrossfadeDelegate();
+    #region publicstaticfields
+    public static ScenesManager Instance { get => instance; }
+    public static int ScenesQuantity { get => scenesQuantity; }
+    #endregion
 
-    public OpenCrossfadeDelegate openCrossfadeEvent;
-    public ExitCrossfadeDelegate exitCrossfadeEvent;
-
+    #region privatestaticfields
+    private static ScenesManager instance;
     private static UnityEvent onSceneChange;
     private static int scene;
-    private static int _scenesQuantity;
+    private static readonly int scenesQuantity = 4;
+    private static readonly int loadSceneAfter = 1;
+    #endregion
 
-    private ScenesManager instance;
-
-    [SerializeField] private int scenesQuantity;
-
-    public static int ScenesQuantity
-    {
-        get => _scenesQuantity;
-    }
-
+    #region publicstaticproperties
     public static int Scene
     {
         get { return scene; }
         set
         {
             scene = value;
-            onSceneChange.Invoke();
+            onSceneChange?.Invoke();
+            if (Instance == null)
+            {
+                SceneManager.LoadScene(scene);
+            }
         }
     }
+    #endregion
 
+    #region publicfields
+    public delegate void OpenLevelDelegate();
+    public delegate void ExitLevelDelegate();
+    public delegate void QuitGameDelegate();
+
+    public OpenLevelDelegate openLevelEvent;
+    public ExitLevelDelegate exitLevelEvent;
+    public QuitGameDelegate quitGameEvent;
+    #endregion
+
+    #region privatemethods
     private void Awake()
     {
         if (instance == null)
@@ -49,23 +62,44 @@ public class ScenesManager : MonoBehaviour
 
     private void Start()
     {
-        _scenesQuantity = scenesQuantity;
-
         scene = 0;
 
         SceneManager.sceneLoaded += OnEsceneLoaded;
 
-        onSceneChange = new UnityEvent();
+        onSceneChange = new();
         onSceneChange.AddListener(OnSceneChanged);
+
+        Application.wantsToQuit += OnGameQuited;
     }
 
     private void OnEsceneLoaded(Scene scene, LoadSceneMode modo)
     {
-        openCrossfadeEvent();
+        openLevelEvent?.Invoke();
+    }
+
+    private bool OnGameQuited()
+    {
+        quitGameEvent?.Invoke();
+        float secondsElapsed = 0;
+        while (secondsElapsed < loadSceneAfter)
+        {
+            secondsElapsed += Time.deltaTime;
+        }
+        return true;
     }
 
     private void OnSceneChanged()
     {
-        exitCrossfadeEvent();
+        exitLevelEvent();
+        StartCoroutine(LoadScene(scene, loadSceneAfter));
     }
+    #endregion
+
+    #region coroutines
+    private IEnumerator LoadScene(int scene, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(scene);
+    }
+    #endregion
 }

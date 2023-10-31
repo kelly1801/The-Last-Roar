@@ -3,36 +3,25 @@ using UnityEngine;
 
 public class AudioClipLoader : MonoBehaviour
 {
-    [Header("CLIP")]
+    #region serializedfields
+    [SerializeField] private new Audio audio;
     [SerializeField] private AudioClip clip;
+    #endregion
 
-    [Header("AUDIO SOURCE")]
-
-    [Header("By component")]
-    [SerializeField] private AudioSource audioSource = null;
-
-    [Header("By tag")]
-    [SerializeField] private string audioSourceTag;
-
+    #region privatemethods
     private void Start()
     {
-        if (audioSource == null)
+        if (audio == null)
         {
-            try
-            {
-                audioSource = GameObject.FindGameObjectWithTag(audioSourceTag).GetComponent<AudioSource>();
-            }
-            catch (Exception)
-            {
-                Debug.Log($"{gameObject.name}: AudioSource with tag {audioSourceTag} not found");
-            }
+            Debug.Log($"{gameObject.name}: audio (Audio instance) is null");
         }
-
-        if (audioSource != null)
+        else
         {
+            AudioSource audioSource = audio.AudioSource;
             audioSource.Stop();
             audioSource.clip = clip;
             audioSource.Play();
         }
     }
+    #endregion
 }

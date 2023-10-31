@@ -4,29 +4,34 @@ using UnityEngine.SceneManagement;
 
 public class UIObserver : MonoBehaviour
 {
+    #region serializedfields
     [SerializeField] Crossfade crossfade;
     [SerializeField] ScenesManager scenesManager;
+    #endregion
 
+    #region privatemethods
     private void Start()
     {
-        scenesManager.openCrossfadeEvent += PlayOpenCrossfade;
-        scenesManager.exitCrossfadeEvent += PlayExitCrossfade;
+        scenesManager.openLevelEvent += RunOpenCrossfade;
+        scenesManager.exitLevelEvent += () => RunExitCrossfade();
+        scenesManager.quitGameEvent += () => RunQuitCrossfade();
     }
 
-    private void PlayOpenCrossfade()
+    private void RunOpenCrossfade()
     {
         crossfade.DisappearCrossfade();
     }
+    #endregion
 
-    private void PlayExitCrossfade()
-    {
-        StartCoroutine(PlayExitCrossfadeCoroutine());
-    }
-
-    private IEnumerator PlayExitCrossfadeCoroutine()
+    #region coroutines
+    private void RunExitCrossfade()
     {
         crossfade.AppearCrossfade();
-        yield return new WaitForSeconds(crossfade.ExitClipLength);
-        SceneManager.LoadScene(ScenesManager.Scene);
     }
+
+    private void RunQuitCrossfade()
+    {
+        crossfade.AppearCrossfade();
+    }
+    #endregion
 }

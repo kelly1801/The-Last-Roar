@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class Crossfade : MonoBehaviour
 {
-    private Animator animator;
-
+    #region serializedfields
     [Header("OPEN ANIMATION")]
     [SerializeField] private string disappearTrigger;
 
     [Header("EXIT ANIMATION")]
-    [SerializeField] private AnimationClip appearClip;
     [SerializeField] private string appearTrigger;
+    #endregion
 
-    public float ExitClipLength { get => appearClip.length; }
+    #region privatefields
+    private Animator animator;
+    #endregion
 
+    #region publicmethods
     public void AppearCrossfade()
     {
         animator.SetTrigger(appearTrigger);
@@ -25,9 +25,12 @@ public class Crossfade : MonoBehaviour
     {
         animator.SetTrigger(disappearTrigger);
     }
+    #endregion
 
+    #region privatemethods
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
     }
+    #endregion
 }

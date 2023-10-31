@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593428985956631095}
   m_Layer: 0
-  m_Name: AnglePalms
+  m_Name: Angle Palms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7420022972017000774}
   m_Layer: 0
-  m_Name: SmallPalms
+  m_Name: Small Palms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

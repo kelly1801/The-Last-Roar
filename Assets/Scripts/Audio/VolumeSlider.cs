@@ -4,22 +4,37 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class VolumeSlider : MonoBehaviour
 {
-    private Slider slider;
+    #region serializedfields
+    [SerializeField] private AudioManager.AudioType type = AudioManager.AudioType.Null;
+    #endregion
 
-    void Start()
+    #region privatefields
+    private Slider slider;
+    #endregion
+
+    #region privatemethods
+    private void Start()
     {
-        slider = gameObject.GetComponent<Slider>();
-        slider.value = AudioManager.Volume;
-        slider.onValueChanged.AddListener(OnSliderValueChanged);
+        if (type == AudioManager.AudioType.Null)
+        {
+            Debug.Log($"{gameObject.name}: The audio type is null");
+        }
+        else
+        {
+            slider = gameObject.GetComponent<Slider>();
+            slider.value = AudioManager.GetVolume(type);
+            slider.onValueChanged.AddListener(OnSliderValueChanged);
+        }
     }
 
     private void OnSliderValueChanged(float value)
     {
-        SetVolume();
+        SetVolume(value);
     }
 
-    private void SetVolume()
+    private void SetVolume(float value)
     {
-        AudioManager.Volume = slider.value;
+        AudioManager.SetVolume(type, value);
     }
+    #endregion
 }

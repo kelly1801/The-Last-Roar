@@ -1,12 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class KeyRenderer : MonoBehaviour
 {
-
+    #region serializedfields
     [Header("IMAGES OF KEYS")]
-
     [SerializeField] UIKey[] keys;
 
     [Header("COLORS")]
@@ -15,9 +13,13 @@ public class KeyRenderer : MonoBehaviour
 
     [Header("SECONDS")]
     [SerializeField] private float secondsToRender;
+    #endregion
 
+    #region privatefields
     private float secondsElapsed = 0;
+    #endregion
 
+    #region privatemethods
     private void Start()
     {
         secondsElapsed = 0;
@@ -29,7 +31,7 @@ public class KeyRenderer : MonoBehaviour
 
         if (secondsElapsed < secondsToRender)
         {
-            Colorize();
+            ColorizeAllKeys();
         }
         else
         {
@@ -37,7 +39,7 @@ public class KeyRenderer : MonoBehaviour
         }
     }
 
-    private void Colorize()
+    private void ColorizeAllKeys()
     {
         foreach (UIKey key in keys)
         {
@@ -56,4 +58,5 @@ public class KeyRenderer : MonoBehaviour
             image.color = usualColor;
         }
     }
+    #endregion
 }

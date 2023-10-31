@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CloudMovement : MonoBehaviour
 {
-
+    #region serializedfields
     [Header("SPEED")]
     [SerializeField] private float velocityX;
     [SerializeField] private float velocityY;
@@ -17,10 +17,13 @@ public class CloudMovement : MonoBehaviour
     [SerializeField] private float lastX;
     [SerializeField] private float lastY;
     [SerializeField] private float lastZ;
+    #endregion
 
+    #region privatefields
     private Transform _transform;
+    #endregion
 
-
+    #region privatemethods
     private void Start()
     {
         _transform = transform;
@@ -53,5 +56,5 @@ public class CloudMovement : MonoBehaviour
     {
         return _transform.position.x < lastX;
     }
-
+    #endregion
 }

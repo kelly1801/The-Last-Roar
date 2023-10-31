@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class MeteoriteRain : MonoBehaviour
 {
+    #region serializedfields
     [Header("Parameters")]
     [SerializeField] private ObjectPooling meteoritePool;
     [SerializeField] private float velY = 5f;
@@ -15,26 +13,30 @@ public class MeteoriteRain : MonoBehaviour
     [SerializeField] private Transform rainOrigin;
 
     [Header("Spawn Origin")]
-    [SerializeField] private BoxCollider spawnArea;
+    [SerializeField] private BoxCollider spawnArea; // spawn area
+    #endregion
 
+    #region privatefields
     private Vector3 min;
     private Vector3 max;
+    #endregion
 
+    #region publicmethods
+    public void Run()
+    {
+        InvokeRepeating(nameof(PoolingCycle), 0, meteoritePool.Seconds);
+    }
+    #endregion
+
+    #region privatemethods
     private void Start()
     {
-        BoxCollider boxCollider = GetComponent<BoxCollider>();
-
-        Bounds bounds = boxCollider.bounds;
+        Bounds bounds = spawnArea.bounds;
 
         min = bounds.min; // left-down corner
         max = bounds.max; // right-up corner
 
         meteoritePool.FillPool();
-    }
-
-    public void Run()
-    {
-        InvokeRepeating(nameof(PoolingCycle), 0, meteoritePool.Seconds);
     }
 
     private void PoolingCycle()
@@ -49,4 +51,5 @@ public class MeteoriteRain : MonoBehaviour
             meteorite.SetActive(true);
         }
     }
+    #endregion
 }

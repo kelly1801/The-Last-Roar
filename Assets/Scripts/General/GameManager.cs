@@ -5,67 +5,54 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public event EventHandler GameOver;
-    public event EventHandler Victory;
-    public event EventHandler EggPicked;
+    public event EventHandler GameOverEvent;
+    public event EventHandler VictoryEvent;
+    public event EventHandler EggPickedEvent;
 
-    [SerializeField] private int _eggsGoal = 1;
-    [SerializeField] private int liveMinutes = 5;
+    [SerializeField][Min(0)] private int _eggsGoal = 1;
+    [SerializeField][Min(0)] private float liveMinutes = 5;
 
-    private static GameManager instance;
+    private static bool gameOver = false;
+    public static bool GameOver { get => gameOver; set => gameOver = value; }
 
-    private static int eggsGoal = 0;
-    private static int liveSeconds = 0;
-    private static int eggsDropped = 0;
+    public delegate void PauseDelegate();
+    public static event PauseDelegate OnPauseEvent;
 
-    public static int EggsGoal { get => eggsGoal; }
-    public static int LiveSeconds { get => liveSeconds; }
-    public static int EggsDropped { get => eggsDropped; set => eggsDropped = value; }
+    private int eggsGoal = 0;
+    private int liveSeconds = 0;
+    private int eggsDropped = 0;
+
+    public int EggsGoal { get => eggsGoal; }
+    public int LiveSeconds { get => liveSeconds; }
+    public int EggsDropped { get => eggsDropped; set => eggsDropped = value; }
 
     private bool victoryTriggered = false;
-
-
-    public static GameManager Instance
-    {
-        get { return instance; }
-    }
 
     public static bool Pause
     {
         get { return Time.timeScale == 0; }
-        set { if (value) { Time.timeScale = 0; } else { Time.timeScale = 1; } }
+        set { if (value) { Time.timeScale = 0; } else { Time.timeScale = 1; } OnPaused(); }
+    }
+
+    public static void OnPaused()
+    {
+        OnPauseEvent?.Invoke();
     }
 
     public void OnEggPicked()
     {
-        EggPicked?.Invoke(this, EventArgs.Empty);
+        EggPickedEvent?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnGameOver()
     {
-        GameOver?.Invoke(this, EventArgs.Empty);
+        GameOverEvent?.Invoke(this, EventArgs.Empty);
     }
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+        StartVariables();
         OnEggPicked();
-    }
-
-    private void Start()
-    {
-        eggsGoal = _eggsGoal;
-        eggsDropped = 0;
-        StartCoroutine(StartTimer(liveMinutes));
     }
 
     private void FixedUpdate()
@@ -79,12 +66,12 @@ public class GameManager : MonoBehaviour
 
     private void OnVictory()
     {
-        Victory?.Invoke(this, EventArgs.Empty);
+        VictoryEvent?.Invoke(this, EventArgs.Empty);
     }
 
-    private IEnumerator StartTimer(int liveMinutes)
+    private IEnumerator StartTimer(float liveMinutes)
     {
-        liveSeconds = liveMinutes * 60;
+        liveSeconds = (int)(liveMinutes * 60);
 
         while (liveSeconds > 0)
         {
@@ -93,5 +80,13 @@ public class GameManager : MonoBehaviour
         }
 
         OnGameOver();
+    }
+
+    private void StartVariables()
+    {
+        gameOver = false;
+        eggsGoal = _eggsGoal;
+        eggsDropped = 0;
+        StartCoroutine(StartTimer(liveMinutes));
     }
 }

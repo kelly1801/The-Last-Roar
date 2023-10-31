@@ -1,13 +1,33 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Pauser : MonoBehaviour
 {
+    #region serializedfields
     [SerializeField] private Image pausePanel;
+    [SerializeField] private new Audio audio;
+    [SerializeField] private AudioClip clip;
+    #endregion
 
+    #region privatefields
     private PlayerController playerController;
+    #endregion
 
+    #region publicmethods
+    public void Pause()
+    {
+        if (GameManager.Pause)
+        {
+            Continue();
+        }
+        else
+        {
+            Stop();
+        }
+    }
+    #endregion
+
+    #region privatemethods
     private void Start()
     {
         pausePanel.gameObject.SetActive(false);
@@ -24,19 +44,8 @@ public class Pauser : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Audio.Play(audio, clip, 1.5f);
             Pause();
-        }
-    }
-
-    public void Pause()
-    {
-        if (GameManager.Pause)
-        {
-            Continue();
-        }
-        else
-        {
-            Stop();
         }
     }
 
@@ -59,4 +68,5 @@ public class Pauser : MonoBehaviour
         GameManager.Pause = true;
         pausePanel.gameObject.SetActive(true);
     }
+    #endregion
 }

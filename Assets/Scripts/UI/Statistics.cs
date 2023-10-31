@@ -4,7 +4,6 @@ using UnityEngine;
 public class Statistics : MonoBehaviour
 {
     #region serializedfield
-    [SerializeField] private GameManager gameManager;
     [SerializeField] private TMP_Text liveSecondsTextField;
     [SerializeField] private TMP_Text remainingEggsTextField;
     #endregion
@@ -12,8 +11,8 @@ public class Statistics : MonoBehaviour
     #region privatemethods
     private void FixedUpdate()
     {
-        liveSecondsTextField.text = $"Live seconds: {gameManager.LiveSeconds}";
-        remainingEggsTextField.text = $"{gameManager.EggsGoal}/{gameManager.EggsDropped}";
+        liveSecondsTextField.text = $"Live seconds: {GameManager.Instance.LiveSeconds}";
+        remainingEggsTextField.text = $"{GameManager.Instance.EggsGoal}/{GameManager.Instance.EggsDropped}";
     }
     #endregion
 }

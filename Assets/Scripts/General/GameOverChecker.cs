@@ -13,6 +13,7 @@ public class GameOverChecker : MonoBehaviour
         if (GameManager.GameOver)
         {
             SceneLoader.LoadLastScene();
+            Destroy(GameManager.Instance);
             enabled = false;
         }
     }

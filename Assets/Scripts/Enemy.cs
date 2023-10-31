@@ -9,11 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Image panelImage; // Reference to the UI panel's Image component
     private NavMeshAgent agent;
 
-    private GameManager gameManager;
 
     private void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -36,7 +34,7 @@ public class Enemy : MonoBehaviour
 
             if (distanceToPlayer < 5)
             {
-                gameManager.OnGameOver();
+                GameManager.Instance.OnGameOver();
 
             }
 

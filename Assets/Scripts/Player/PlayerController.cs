@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] GameManager gameManager;
-
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 5.0f;
     private float playerRadius;
@@ -40,8 +38,8 @@ public class PlayerController : MonoBehaviour
         gameInput.OnRunAction += OnRunAction;
         gameInput.OnRunCanceled += OnRunCanceled;
         gameInput.OnAttackAction += OnAttackAction;
-        gameManager.GameOverEvent += OnGameOver;
-        gameManager.VictoryEvent += OnVictory;
+        GameManager.Instance.GameOverEvent += OnGameOver;
+        GameManager.Instance.VictoryEvent += OnVictory;
 
     }
     void FixedUpdate()
@@ -90,7 +88,7 @@ public class PlayerController : MonoBehaviour
         if (nearNest && HasEgg())
         {
             DestroyEgg();
-            gameManager.EggsDropped++;
+            GameManager.Instance.EggsDropped++;
         }
     }
 

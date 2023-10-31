@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     private static bool gameOver = false;
     public static bool GameOver { get => gameOver; set => gameOver = value; }
 
+    private static GameManager instance;
+    public static GameManager Instance { get => instance; }
+
     public delegate void PauseDelegate();
     public static event PauseDelegate OnPauseEvent;
 
@@ -51,6 +54,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         StartVariables();
         OnEggPicked();
     }

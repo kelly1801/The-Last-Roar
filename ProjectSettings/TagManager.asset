@@ -7,6 +7,9 @@ TagManager:
   - FxTemporaire
   - Nest
   - Enemy
+  - MusicAudioSource
+  - SoundAudioSource
+  - Ground
   layers:
   - Default
   - TransparentFX
